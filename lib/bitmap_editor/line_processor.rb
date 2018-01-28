@@ -1,6 +1,5 @@
 module BitmapEditor
   module LineProcessor
-
     UNRECOGNISED_COMMAND = 'Unrecognised command'.freeze
     INVALID_COMMAND = 'Invalid use of command'.freeze
     EMPTY_BIT_MAP = 'There is no image'.freeze
@@ -9,20 +8,20 @@ module BitmapEditor
       args = line.split(' ')
       command = args.shift
       case command
-        when 'I'
-          new_bitmap(args)
-        when 'L'
-          set_pixel(args)
-        when 'V'
-          set_vertical(args)
-        when 'H'
-          set_horizontal(args)
-        when 'C'
-          self.reset(args)
-        when 'S'
-          self.show(args)
-        else
-          UNRECOGNISED_COMMAND
+      when 'I'
+        new_bitmap(args)
+      when 'L'
+        set_pixel(args)
+      when 'V'
+        set_vertical(args)
+      when 'H'
+        set_horizontal(args)
+      when 'C'
+        reset(args)
+      when 'S'
+        show(args)
+      else
+        UNRECOGNISED_COMMAND
       end
     end
 
@@ -34,7 +33,7 @@ module BitmapEditor
 
     def self.new_bitmap(args)
       return INVALID_COMMAND unless valid_number_of_args?(args, 2)
-      process_action( BitMap.create(columns_number: args.first.to_i, rows_number: args.last.to_i))
+      process_action(BitMap.create(columns_number: args.first.to_i, rows_number: args.last.to_i))
     end
 
     def self.set_pixel(args)

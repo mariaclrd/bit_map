@@ -1,8 +1,8 @@
 require 'bundler'
 require 'benchmark'
 
-root_path = File.join(File.dirname(__FILE__),'..')
-lib_path = File.join(root_path,'lib')
+root_path = File.join(File.dirname(__FILE__), '..')
+lib_path = File.join(root_path, 'lib')
 app_name = 'bitmap_editor'
 
 $LOAD_PATH << root_path
