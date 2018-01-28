@@ -22,5 +22,19 @@ RSpec.describe 'LineProcessor' do
         LineProcessor.call(line)
       end
     end
+
+    describe "L" do
+      it 'calls the set_pixel method of the BitMap' do
+        line = "L 1 3 A"
+        expect(BitMap).to receive(:set_pixel).with({column: 1, row: 3, value: 'A'})
+        LineProcessor.call(line)
+      end
+
+      it 'returns an error if set_pixel fails' do
+        line = "L 1 3 A"
+        allow(BitMap).to receive(:set_pixel).with({column: 1, row: 3, value: 'A'}).and_return([false, 'Invalid row number'])
+        expect(LineProcessor.call(line)).to eq 'Invalid row number'
+      end
+    end
   end
 end
