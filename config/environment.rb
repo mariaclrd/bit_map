@@ -1,5 +1,6 @@
 require 'bundler'
-require 'benchmark'
+
+Bundler.setup
 
 root_path = File.join(File.dirname(__FILE__), '..')
 lib_path = File.join(root_path, 'lib')
