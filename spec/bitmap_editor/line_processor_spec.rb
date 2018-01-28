@@ -79,5 +79,18 @@ RSpec.describe 'LineProcessor' do
         expect(LineProcessor.call(line)).to eq 'Invalid row number'
       end
     end
+
+    describe "C" do
+      it 'calls the reset method of the BitMap' do
+        line = "C"
+        expect(BitMap).to receive(:reset)
+        LineProcessor.call(line)
+      end
+
+      it 'returns an error if there are more arguments than expected' do
+        line = "C A"
+        expect(LineProcessor.call(line)).to eq "Invalid use of command"
+      end
+    end
   end
 end

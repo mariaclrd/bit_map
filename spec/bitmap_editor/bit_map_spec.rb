@@ -103,7 +103,7 @@ RSpec.describe 'BitMap' do
       BitMap.create(columns_number: 5, rows_number: 6)
     end
 
-    it 'sets the vertical' do
+    it 'sets an horizontal value' do
       BitMap.set_horizontal({from_column: 3, to_column: 5, row: 2, value: 'Z'})
       expect(BitMap.bit_map).to eq([
                                        ['O','O','O','O','O'],
@@ -133,6 +133,33 @@ RSpec.describe 'BitMap' do
 
     it 'returns an error if value is not valid' do
       expect(BitMap.set_horizontal({from_column: 3, to_column: 5, row: 2, value: 40})).to eq([false, 'Invalid value'])
+    end
+  end
+
+  describe "reset" do
+    before do
+      BitMap.create(columns_number: 5, rows_number: 6)
+    end
+
+    it 'cleans the bitmap' do
+      BitMap.set_horizontal({from_column: 3, to_column: 5, row: 2, value: 'Z'})
+      expect(BitMap.bit_map).to eq([
+                                       ['O','O','O','O','O'],
+                                       ['O','O','Z','Z','Z'],
+                                       ['O','O','O','O','O'],
+                                       ['O','O','O','O','O'],
+                                       ['O','O','O','O','O'],
+                                       ['O','O','O','O','O']
+                                   ])
+      BitMap.reset
+      expect(BitMap.bit_map).to eq([
+                                       ['O','O','O','O','O'],
+                                       ['O','O','O','O','O'],
+                                       ['O','O','O','O','O'],
+                                       ['O','O','O','O','O'],
+                                       ['O','O','O','O','O'],
+                                       ['O','O','O','O','O']
+                                   ])
     end
   end
 end

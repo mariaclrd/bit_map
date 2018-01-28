@@ -13,7 +13,7 @@ module BitmapEditor
       end
 
       def create(rows_number:, columns_number: )
-        self.bit_map = Array.new(rows_number).map{|row| Array.new(columns_number).map{|element| WHITE_BIT} }
+        self.bit_map = Array.new(rows_number).map{|row| Array.new(columns_number).map{ WHITE_BIT} }
       end
 
       def set_pixel(row:, column:, value:)
@@ -39,6 +39,12 @@ module BitmapEditor
         return error(INVALID_VALUE)  unless valid_value?(value)
         new_row = bit_map[(row-1)].map.with_index {|element, index| index.between?((from_column-1), (to_column-1)) ? value : element}
         bit_map[row-1] = new_row
+      end
+
+      def reset
+        rows_number = bit_map.size
+        columns_number = bit_map.first.size
+        create(rows_number: rows_number, columns_number: columns_number)
       end
 
       private
