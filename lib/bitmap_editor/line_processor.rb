@@ -14,6 +14,8 @@ module BitmapEditor
           set_pixel(args)
         when 'V'
           set_vertical(args)
+        when 'H'
+          set_horizontal(args)
         when 'S'
           puts "There is no image"
         else
@@ -42,6 +44,12 @@ module BitmapEditor
     def self.set_vertical(args)
       return INVALID_COMMAND unless valid_number_of_args?(args, 4)
       success, result = BitMap.set_vertical(column: args.first.to_i, from_row: args[1].to_i, to_row: args[2].to_i, value: args.last)
+      success ? nil : result
+    end
+
+    def self.set_horizontal(args)
+      return INVALID_COMMAND unless valid_number_of_args?(args, 4)
+      success, result = BitMap.set_horizontal(from_column: args.first.to_i, to_column: args[1].to_i, row: args[2].to_i, value: args.last)
       success ? nil : result
     end
 

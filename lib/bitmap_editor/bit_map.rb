@@ -33,6 +33,14 @@ module BitmapEditor
         end
       end
 
+      def set_horizontal(from_column:, to_column:, row:, value:)
+        return  error(NUMBER_OF_ROWS_EXCEEDED) unless valid_row?(row)
+        return error(NUMBER_OF_COLUMNS_EXCEEDED)  unless valid_column?(from_column) && valid_column?(to_column)
+        return error(INVALID_VALUE)  unless valid_value?(value)
+        new_row = bit_map[(row-1)].map.with_index {|element, index| index.between?((from_column-1), (to_column-1)) ? value : element}
+        bit_map[row-1] = new_row
+      end
+
       private
 
       def valid_row?(row)
@@ -40,7 +48,7 @@ module BitmapEditor
       end
 
       def valid_column?(column)
-        column > 0 && column < bit_map.first.size
+        column > 0 && column <= bit_map.first.size
       end
 
       def valid_value?(value)

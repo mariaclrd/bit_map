@@ -60,5 +60,24 @@ RSpec.describe 'LineProcessor' do
         expect(LineProcessor.call(line)).to eq 'Invalid row number'
       end
     end
+
+    describe "H" do
+      it 'calls the set_horizontal method of the BitMap' do
+        line = "H 3 5 2 Z"
+        expect(BitMap).to receive(:set_horizontal).with({from_column: 3, to_column: 5, row: 2, value: 'Z'})
+        LineProcessor.call(line)
+      end
+
+      it 'returns an error if there are more arguments than expected' do
+        line = "H 3 5 2 Z A"
+        expect(LineProcessor.call(line)).to eq "Invalid use of command"
+      end
+
+      it 'returns an error if set_vertical fails' do
+        line = "H 3 5 2 Z"
+        allow(BitMap).to receive(:set_horizontal).with({from_column: 3, to_column: 5, row: 2, value: 'Z'}).and_return([false, 'Invalid row number'])
+        expect(LineProcessor.call(line)).to eq 'Invalid row number'
+      end
+    end
   end
 end
