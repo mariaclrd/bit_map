@@ -13,6 +13,9 @@ Bitmaps starts at coordinates 1,1. Colours are specified by capital letters.
 
 `>./bin/bitmap_editor ./examples/show.txt`
 
+Install the dependecies:
+`>bundle install`
+
 To run the tests: 
 `>bundle exec rspec`
 
