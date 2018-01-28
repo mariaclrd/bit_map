@@ -30,9 +30,33 @@ RSpec.describe 'LineProcessor' do
         LineProcessor.call(line)
       end
 
+      it 'returns an error if there are more arguments than expected' do
+        line = "L 1 3 A B"
+        expect(LineProcessor.call(line)).to eq "Invalid use of command"
+      end
+
       it 'returns an error if set_pixel fails' do
         line = "L 1 3 A"
         allow(BitMap).to receive(:set_pixel).with({column: 1, row: 3, value: 'A'}).and_return([false, 'Invalid row number'])
+        expect(LineProcessor.call(line)).to eq 'Invalid row number'
+      end
+    end
+
+    describe "V" do
+      it 'calls the set_vertical method of the BitMap' do
+        line = "V 2 3 6 W"
+        expect(BitMap).to receive(:set_vertical).with({column: 2, from_row: 3, to_row: 6, value: 'W'})
+        LineProcessor.call(line)
+      end
+
+      it 'returns an error if there are more arguments than expected' do
+        line = "V 2 3 6 W Z"
+        expect(LineProcessor.call(line)).to eq "Invalid use of command"
+      end
+
+      it 'returns an error if set_vertical fails' do
+        line = "V 2 3 6 W"
+        allow(BitMap).to receive(:set_vertical).with({column: 2, from_row: 3, to_row: 6, value: 'W'}).and_return([false, 'Invalid row number'])
         expect(LineProcessor.call(line)).to eq 'Invalid row number'
       end
     end

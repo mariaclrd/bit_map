@@ -59,4 +59,42 @@ RSpec.describe 'BitMap' do
       expect(BitMap.set_pixel({column: 1, row: 3, value: 13})).to eq([false, 'Invalid value'])
     end
   end
+
+  describe "set_vertical" do
+    before do
+      BitMap.create(columns_number: 5, rows_number: 6)
+    end
+
+    it 'sets the vertical' do
+      BitMap.set_vertical({column: 2, from_row: 3, to_row: 6, value: 'W'})
+      expect(BitMap.bit_map).to eq([
+                                       ['O','O','O','O','O'],
+                                       ['O','O','O','O','O'],
+                                       ['O','W','O','O','O'],
+                                       ['O','W','O','O','O'],
+                                       ['O','W','O','O','O'],
+                                       ['O','W','O','O','O']
+                                   ])
+    end
+
+    it 'returns an error if row exceeds number of rows' do
+      expect(BitMap.set_vertical({column: 2, from_row: 3, to_row: 7, value: 'W'})).to eq([false, 'Invalid row number'])
+    end
+
+    it 'returns an error if row is negative' do
+      expect(BitMap.set_vertical({column: 2, from_row: -3, to_row: 6, value: 'W'})).to eq([false, 'Invalid row number'])
+    end
+
+    it 'returns an error if column exceeds number of rows' do
+      expect(BitMap.set_vertical({column: 10, from_row: 3, to_row: 6, value: 'W'})).to eq([false, 'Invalid column number'])
+    end
+
+    it 'returns an error if colum is negative' do
+      expect(BitMap.set_vertical({column: -2, from_row: 3, to_row: 6, value: 'W'})).to eq([false, 'Invalid column number'])
+    end
+
+    it 'returns an error if value is not valid' do
+      expect(BitMap.set_vertical({column: 2, from_row: 3, to_row: 6, value: 20})).to eq([false, 'Invalid value'])
+    end
+  end
 end

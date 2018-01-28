@@ -24,10 +24,19 @@ module BitmapEditor
         [true, nil]
       end
 
+      def set_vertical(column:, from_row:, to_row:, value:)
+        return  error(NUMBER_OF_ROWS_EXCEEDED) unless valid_row?(from_row) && valid_row?(to_row)
+        return error(NUMBER_OF_COLUMNS_EXCEEDED)  unless valid_column?(column)
+        return error(INVALID_VALUE)  unless valid_value?(value)
+        bit_map[(from_row-1)..(to_row-1)].each do |row|
+          row[(column-1)] = value
+        end
+      end
+
       private
 
       def valid_row?(row)
-        row > 0 && row < bit_map.size
+        row > 0 && row <= bit_map.size
       end
 
       def valid_column?(column)

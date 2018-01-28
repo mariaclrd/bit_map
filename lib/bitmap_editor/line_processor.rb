@@ -12,6 +12,8 @@ module BitmapEditor
           new_bitmap(args)
         when 'L'
           set_pixel(args)
+        when 'V'
+          set_vertical(args)
         when 'S'
           puts "There is no image"
         else
@@ -21,23 +23,25 @@ module BitmapEditor
 
     private
 
-    def self.valid_create_args?(args)
-      args.count == 2
-    end
-
-    def self.valid_set_pixel_args?(args)
-      args.count == 3
+    def self.valid_number_of_args?(args, count)
+      args.count == count
     end
 
     def self.new_bitmap(args)
-      return INVALID_COMMAND unless valid_create_args?(args)
+      return INVALID_COMMAND unless valid_number_of_args?(args, 2)
       BitMap.create(columns_number: args.first.to_i, rows_number: args.last.to_i)
       nil
     end
 
     def self.set_pixel(args)
-      return INVALID_COMMAND unless valid_set_pixel_args?(args)
+      return INVALID_COMMAND unless valid_number_of_args?(args, 3)
       success, result = BitMap.set_pixel(column: args.first.to_i, row: args[1].to_i, value: args.last)
+      success ? nil : result
+    end
+
+    def self.set_vertical(args)
+      return INVALID_COMMAND unless valid_number_of_args?(args, 4)
+      success, result = BitMap.set_vertical(column: args.first.to_i, from_row: args[1].to_i, to_row: args[2].to_i, value: args.last)
       success ? nil : result
     end
 
