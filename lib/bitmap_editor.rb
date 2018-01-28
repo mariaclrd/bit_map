@@ -10,7 +10,7 @@ module BitmapEditor
       line = line.chomp
       result = LineProcessor.call(line)
 
-      puts result if result
+      puts result, "\n" if result
     end
   end
 
