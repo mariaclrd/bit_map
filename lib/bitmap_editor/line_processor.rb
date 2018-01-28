@@ -3,6 +3,7 @@ module BitmapEditor
 
     UNRECOGNISED_COMMAND = 'Unrecognised command'.freeze
     INVALID_COMMAND = 'Invalid use of command'.freeze
+    EMPTY_BIT_MAP = 'There is no image'.freeze
 
     def call(line)
       args = line.split(' ')
@@ -19,7 +20,7 @@ module BitmapEditor
         when 'C'
           self.reset(args)
         when 'S'
-          puts "There is no image"
+          self.show(args)
         else
           UNRECOGNISED_COMMAND
       end
@@ -59,6 +60,12 @@ module BitmapEditor
       return INVALID_COMMAND unless valid_number_of_args?(args, 0)
       BitMap.reset
       nil
+    end
+
+    def self.show(args)
+      return INVALID_COMMAND unless valid_number_of_args?(args, 0)
+      bitmap = BitMap.show
+      bitmap.empty? ? EMPTY_BIT_MAP : bitmap
     end
 
     module_function :call

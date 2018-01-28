@@ -47,6 +47,12 @@ module BitmapEditor
         create(rows_number: rows_number, columns_number: columns_number)
       end
 
+      def show
+        bit_map.map do |row|
+          row.join()
+        end
+      end
+
       private
 
       def valid_row?(row)

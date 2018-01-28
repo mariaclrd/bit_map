@@ -92,5 +92,29 @@ RSpec.describe 'LineProcessor' do
         expect(LineProcessor.call(line)).to eq "Invalid use of command"
       end
     end
+
+    describe "S" do
+      it 'calls the show method of the BitMap' do
+        line = "S"
+        expect(BitMap).to receive(:show).and_call_original
+        LineProcessor.call(line)
+      end
+
+      it 'returns an error if there are more arguments than expected' do
+        line = "S A"
+        expect(LineProcessor.call(line)).to eq "Invalid use of command"
+      end
+
+      it 'returns a message indicating that the bitmap is empty if it has not been set' do
+        line = "S"
+        expect(LineProcessor.call(line)).to eq 'There is no image'
+      end
+
+      it 'prints the bitmap' do
+        BitMap.create({columns_number: 5, rows_number: 6})
+        line = "S"
+        expect(LineProcessor.call(line)).to eq ["OOOOO", "OOOOO", "OOOOO", "OOOOO", "OOOOO", "OOOOO"]
+      end
+    end
   end
 end

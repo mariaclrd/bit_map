@@ -162,4 +162,21 @@ RSpec.describe 'BitMap' do
                                    ])
     end
   end
+
+  describe 'show' do
+    it 'returns the existing bit map' do
+      BitMap.create(columns_number: 5, rows_number: 6)
+      expect(BitMap.show).to eq(["OOOOO",
+                                 "OOOOO",
+                                 "OOOOO",
+                                 "OOOOO",
+                                 "OOOOO",
+                                 "OOOOO"
+                                ])
+    end
+
+    it 'returns empty array if the is non an exiting map' do
+      expect(BitMap.show).to eq []
+    end
+  end
 end
