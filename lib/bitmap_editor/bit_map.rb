@@ -21,7 +21,7 @@ module BitmapEditor
         return error(NUMBER_OF_COLUMNS_EXCEEDED)  unless valid_column?(column)
         return error(INVALID_VALUE)  unless valid_value?(value)
         bit_map[row-1][column-1] = value
-        [true, nil]
+        success_response
       end
 
       def set_vertical(column:, from_row:, to_row:, value:)
@@ -31,6 +31,7 @@ module BitmapEditor
         bit_map[(from_row-1)..(to_row-1)].each do |row|
           row[(column-1)] = value
         end
+        success_response
       end
 
       def set_horizontal(from_column:, to_column:, row:, value:)
@@ -39,21 +40,32 @@ module BitmapEditor
         return error(INVALID_VALUE)  unless valid_value?(value)
         new_row = bit_map[(row-1)].map.with_index {|element, index| index.between?((from_column-1), (to_column-1)) ? value : element}
         bit_map[row-1] = new_row
+        success_response
       end
 
       def reset
         rows_number = bit_map.size
         columns_number = bit_map.first.size
         create(rows_number: rows_number, columns_number: columns_number)
+        success_response
       end
 
       def show
-        bit_map.map do |row|
+        current_bitmap = bit_map.map do |row|
           row.join()
         end
+        success_response(current_bitmap)
       end
 
       private
+
+      def success_response(result=nil)
+        [true, result]
+      end
+
+      def error(message)
+        [false, message]
+      end
 
       def valid_row?(row)
         row > 0 && row <= bit_map.size
@@ -66,10 +78,6 @@ module BitmapEditor
       def valid_value?(value)
         valid_values = (10...36).map{ |i| i.to_s(36).upcase}
         valid_values.include?(value)
-      end
-
-      def error(message)
-        [false, message]
       end
     end
   end

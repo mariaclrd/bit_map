@@ -34,38 +34,38 @@ module BitmapEditor
 
     def self.new_bitmap(args)
       return INVALID_COMMAND unless valid_number_of_args?(args, 2)
-      BitMap.create(columns_number: args.first.to_i, rows_number: args.last.to_i)
-      nil
+      process_action( BitMap.create(columns_number: args.first.to_i, rows_number: args.last.to_i))
     end
 
     def self.set_pixel(args)
       return INVALID_COMMAND unless valid_number_of_args?(args, 3)
-      success, result = BitMap.set_pixel(column: args.first.to_i, row: args[1].to_i, value: args.last)
-      success ? nil : result
+      process_action(BitMap.set_pixel(column: args.first.to_i, row: args[1].to_i, value: args.last))
     end
 
     def self.set_vertical(args)
       return INVALID_COMMAND unless valid_number_of_args?(args, 4)
-      success, result = BitMap.set_vertical(column: args.first.to_i, from_row: args[1].to_i, to_row: args[2].to_i, value: args.last)
-      success ? nil : result
+      process_action(BitMap.set_vertical(column: args.first.to_i, from_row: args[1].to_i, to_row: args[2].to_i, value: args.last))
     end
 
     def self.set_horizontal(args)
       return INVALID_COMMAND unless valid_number_of_args?(args, 4)
-      success, result = BitMap.set_horizontal(from_column: args.first.to_i, to_column: args[1].to_i, row: args[2].to_i, value: args.last)
-      success ? nil : result
+      process_action(BitMap.set_horizontal(from_column: args.first.to_i, to_column: args[1].to_i, row: args[2].to_i, value: args.last))
     end
 
     def self.reset(args)
       return INVALID_COMMAND unless valid_number_of_args?(args, 0)
-      BitMap.reset
-      nil
+      process_action(BitMap.reset)
     end
 
     def self.show(args)
       return INVALID_COMMAND unless valid_number_of_args?(args, 0)
-      bitmap = BitMap.show
-      bitmap.empty? ? EMPTY_BIT_MAP : bitmap
+      success, result = BitMap.show
+      success ? (result.empty? ? EMPTY_BIT_MAP : result) : result
+    end
+
+    def self.process_action(action)
+      success, result = action
+      success ? nil : result
     end
 
     module_function :call
