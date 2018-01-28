@@ -25,8 +25,6 @@ module BitmapEditor
       end
     end
 
-    private
-
     def self.valid_number_of_args?(args, count)
       args.count == count
     end
